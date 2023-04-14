@@ -1,3 +1,5 @@
+// This code is based on the examples found at https://pkg.go.dev/github.com/golang-jwt/jwt/v5
+
 package main
 
 import (
@@ -92,7 +94,6 @@ func main() {
 	case "validate":
 		tokenString := os.Args[2]
 		fmt.Println("IS YOUR TOKEN VALID????")
-		//tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpc3MiOiJ0ZXN0IiwiYXVkIjoic2luZ2xlIn0.QAWg1vGvnqRuCFTMcPkjZljXHh8U3L_qUjszOtQbeaA"
 
 		tokenValid, err := jwt.ParseWithClaims(tokenString, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 			return hmacSampleSecret, nil
@@ -104,9 +105,13 @@ func main() {
 			fmt.Println(err)
 		}
 
+	// This case was thought in case of using in a cycle. Due to lack of time, is just informative
 	case "exit":
 		fmt.Println("Thanks for using me! Good bye!")
 		os.Exit(1)
+
+	default:
+		fmt.Println("You did not use a valid command. Remember, to use 'create' or 'validate' once built the command")
 
 	}
 
